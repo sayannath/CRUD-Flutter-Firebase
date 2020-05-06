@@ -27,12 +27,12 @@ class _ListViewProjectState extends State<ListViewProject> {
 
     projectSub?.cancel();
     projectSub = db.getProjectList().listen((QuerySnapshot snapshot) {
-      final List<Project> notes = snapshot.documents
+      final List<Project> project = snapshot.documents
           .map((documentSnapshot) => Project.fromMap(documentSnapshot.data))
           .toList();
 
       setState(() {
-        this.items = notes;
+        this.items = project;
       });
     });
   }
@@ -140,18 +140,18 @@ class _ListViewProjectState extends State<ListViewProject> {
     );
   }
 
-  void _deleteProject(BuildContext context, Project note, int position) async {
-    db.deleteProject(note.id).then((notes) {
+  void _deleteProject(BuildContext context, Project project, int position) async {
+    db.deleteProject(project.id).then((project) {
       setState(() {
         items.removeAt(position);
       });
     });
   }
 
-  void _navigateToProject(BuildContext context, Project note) async {
+  void _navigateToProject(BuildContext context, Project project) async {
     await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ProjectScreen(note)),
+      MaterialPageRoute(builder: (context) => ProjectScreen(project)),
     );
   }
 
